@@ -45,15 +45,20 @@ def dirToDict(dir):
                     score -= 20
                 dict['points'] = score + 10
                 dict.pop('chips', None)
+                for i in whitelist:
+                    if (i['hash'] == dict['hash']) & (int(filename[0]) >= i['day']):
+                        dict['points'] = dict['points'] * 2
             finalList.append(dictList)
-        
     return finalList
 
 if __name__ == '__main__':
 
-    os.mkdir('./data')
+    
     dir = sys.argv[1]
 
+    #teams that have shared code go here. Add as dicts: {'hash' : '<hash>', 'day' : <int>}
+    whitelist = []
+    
     scoreList = dictCombiner(dirToDict(dir))
     #scoreList = json.dumps(test)
 
@@ -61,7 +66,7 @@ if __name__ == '__main__':
         file.write('<table > <table border="1"> <tbody>')
         file.write('<tr> <td> Team </td> <td> Hash </td> <td> Score </td> </tr>')
         for team in scoreList:
-            file.write('<tr> <td> muie dragnea </td> <td>' + team['hash'] + '</td> <td>' + str(team['points']) + '</td> </tr>')
+            file.write('<tr> <td> NamePlaceholder </td> <td>' + team['hash'] + '</td> <td>' + str(team['points']) + '</td> </tr>')
         file.write('</tbody> </table>')
             
 
